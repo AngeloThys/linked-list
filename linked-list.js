@@ -7,7 +7,6 @@ class LinkedList {
 
   append(value) {
     const node = new Node(value);
-    this.length++;
 
     if (this.length === 0) {
       this.tail = this.head = node;
@@ -15,11 +14,11 @@ class LinkedList {
       this.tail.nextNode = node;
       this.tail = node;
     }
+    this.length++;
   }
 
   prepend(value) {
     const node = new Node(value);
-    this.length++;
 
     if (this.length === 0) {
       this.head = this.tail = node;
@@ -27,17 +26,18 @@ class LinkedList {
       node.nextNode = this.head;
       this.head = node;
     }
+    this.length++;
   }
 
   size() {
     return this.length;
   }
 
-  get head() {
+  getHead() {
     return this.head;
   }
 
-  get tail() {
+  getTail() {
     return this.tail;
   }
 
@@ -55,14 +55,16 @@ class LinkedList {
     if (this.length === 1) {
       let node = this.head;
       this.head = this.tail = null;
+      this.length--;
       return node;
     }
     let prevNode = this.head;
     let tail = this.tail;
     for (let i = 1; i < this.length - 1; ++i) {
-      prevNode = node.nextNode;
+      prevNode = prevNode.nextNode;
     }
     this.tail = prevNode;
+    this.length--;
     return tail;
   }
 
@@ -86,11 +88,13 @@ class LinkedList {
 
   toString() {
     let node = this.head;
-    let string = String(`( this.head.value ) ->`);
-    for (let i = 1; i <= this.length; ++i) {
+    let string = String(`( ${this.head.value} ) ->`);
+    for (let i = 1; i <= this.length - 1; ++i) {
       node = node.nextNode;
-      string += ` ( node.value ) ->`;
+      string += ` ( ${node.value} ) ->`;
     }
+    string += ' null';
+    return string;
   }
 }
 
