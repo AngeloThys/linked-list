@@ -96,6 +96,53 @@ class LinkedList {
     string += ' null';
     return string;
   }
+
+  insertAt(value, index) {
+    if (index === 0) {
+      return prepend(value);
+    }
+    if (index === this.length) {
+      return append(value);
+    }
+    if (index > this.length || index < 0) {
+      throw new Error("Out of Bounds Error");
+    }
+    let node = this.head;
+    for (let i = 1; i < index; ++i) {
+      node = node.nextNode;
+    }
+    let newNode = new Node(value);
+    newNode.nextNode = node.nextNode;
+    node.nextNode = newNode;
+    this.length++;
+  }
+
+  removeAt(index) {
+    if (index >= this.length || index < 0) {
+      throw new Error('Out of Bounds Error');
+    }
+    if (index === 0) {
+      this.head = this.head.nextNode;
+      this.length--;
+      return;
+    }
+    if (index === this.length - 1) {
+      let node = this.head;
+      for (let i = 1; i < index; ++i) {
+        node = node.nextNode;
+      }
+      node.nextNode = null;
+      this.tail = node;
+      this.length--;
+      return;
+    }
+    let node = this.head;
+    for (let i = 1; i < index; ++i) {
+      node = node.nextNode;
+    }
+    node.nextNode = node.nextNode.nextNode;
+    this.length--;
+  }
 }
 
 class Node {
@@ -104,3 +151,4 @@ class Node {
     this.nextNode = null;
   }
 }
+
